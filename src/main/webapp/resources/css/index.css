@@ -1,9 +1,86 @@
-.movieWrapper {
-    width:98;
-    height:141;
-    background-color: aqua;
+body {
+  font-family: 'Nanum Gothic'
 }
 
-#cs1 {
-    
+.movieWrapper {
+  width: 100%;
+  height: 100%;
+  display:inline-table;
+  margin-top:10px;
+}
+.movieWrapper:hover {
+  background-color : #eeeeee;
+}
+
+.posterWrapper {
+  width: 10%;
+  float: left;
+}
+
+.contentWrapper {
+  margin-top:20px;
+  width: 80%;
+  float: left;
+  margin-left: 10px;
+}
+
+.rating {
+  width: 25px;
+  float: left;
+}
+
+.title {
+  float: left;
+  font-size: 17px;
+  font-weight: bold;
+  margin-left:5px;
+}
+
+.star {
+  background:
+    url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png) 0
+    -20px no-repeat;
+  display: block;
+  overflow: hidden;
+  height: 12px;
+}
+
+.starOff {
+  float: left;
+  overflow: hidden;
+  width: 75px;
+  height: 12px;
+  margin-top: 4px;
+  background:
+    url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png)
+    no-repeat;
+}
+
+.starNum {
+  font-size: 17px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.audience {
+  margin-left:10px;
+  color: gray;
+  font-size: 14px;
+}
+.audienceCount{
+    color: gray;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.ticketingText{
+  margin-left:10px;
+  font-size:13px;
+  font-weight:bold;
+  user-select:none;
+}
+
+.ticketing{
+  font-size:17px;
+  font-weight:bold;
 }
