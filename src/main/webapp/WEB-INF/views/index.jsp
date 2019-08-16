@@ -31,7 +31,10 @@
         <span class="starNum">${movieList.starRating}</span> 
         <span class="audience">참여<span class="audienceCount"> ${movieList.audience}</span>명</span>
         <span class="ticketingText">예매율</span>
-        <span class="ticketing">${movieList.ticketing}</span>% 
+        <span class="ticketing">
+          <c:if test="${movieList.ticketing != null}">${movieList.ticketing}</c:if>
+          <c:if test="${movieList.ticketing == null}">0.01미만</c:if>
+        </span>% 
       </div>
   </div>
   <hr>
