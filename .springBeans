@@ -9,6 +9,11 @@
 	<configs>
 	</configs>
 	<autoconfigs>
+		<config>src/main/resources/spring/appServlet/action-servlet.xml</config>
+		<config>src/main/resources/spring/context-sqlmapping.xml</config>
+		<config>src/main/resources/spring/appServlet/interceptor-servlet.xml</config>
+		<config>src/main/resources/spring/context-datasource.xml</config>
+		<config>src/main/resources/spring/context-root.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

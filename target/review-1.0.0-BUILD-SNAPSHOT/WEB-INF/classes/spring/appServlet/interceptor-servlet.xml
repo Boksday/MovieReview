@@ -10,7 +10,7 @@
     <interceptors>
        <interceptor>
            <mapping path="/**"/>
-           <beans:bean id="commonInterceptor" class="com.movie.review.interceptor.CommonInterceptor"/>
+           <beans:bean id="commonInterceptor" class="bit.movie.review.interceptor.CommonInterceptor"/>
        </interceptor>
     </interceptors>
      
@@ -20,6 +20,5 @@
       <beans:property name="order" value="0"/>
     </beans:bean>
      
-    <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
        
 </beans:beans>

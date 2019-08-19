@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.movie.review.dao.MovieDAO">
+	<select id="selectAllMovie" resultType="movie">
+		SELECT *
+		FROM MOVIE
+	</select>
+	
+	<insert id="insertMovie" parameterType="movie">
+		INSERT INTO MOVIE(CODENAVER, CODEDAUM, MOVIENAME, POSTERIMGSRC, MOVIEAGE, STARRATING, AUDIENCE, TICKETING)
+		VALUES(#{codeNaver}, #{codeDaum}, #{movieName}, #{posterImgSrc}, #{movieAge}, #{starRating}, #{audience}, #{ticketing})
+	</insert>
+	
+</mapper>
