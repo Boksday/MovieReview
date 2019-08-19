@@ -1,7 +1,5 @@
 package bit.movie.review.dto;
 
-import java.sql.Date;
-
 public class Movie {
   private int id;
   private int codeNaver;
@@ -14,12 +12,12 @@ public class Movie {
   private String audience;
   private String ticketing;
   
-  private Date date;
+  private String date;
   
-  public Date getDate() {
+  public String getDate() {
     return date;
   }
-  public void setDate(Date date) {
+  public void setDate(String date) {
     this.date = date;
   }
   public int getId() {

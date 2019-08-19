@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import bit.movie.review.dao.MovieDAO;
+
 @Controller
 public class HomeController {
   @Autowired
@@ -20,11 +22,10 @@ public class HomeController {
   
   @RequestMapping(value="/")
   public ModelAndView GetMovie() throws Exception{
-
-    
-    
+    MovieDAO movieDAO = sqlSession.getMapper(MovieDAO.class);
     ModelAndView mav = new ModelAndView();
     mav.setViewName("index");
+    mav.addObject("movieList",movieDAO.selectAllMovie());
     return mav;
   }
 }

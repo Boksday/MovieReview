@@ -20,67 +20,83 @@ import bit.movie.review.dto.Movie;
 public class Scheduler {
   @Autowired
   private SqlSession sqlSession;
-  
-  @Scheduled(fixedDelay=5000)
-  public void TestScheduler() throws IOException {
-    Document doc = Jsoup.connect("https://movie.naver.com/movie/running/current.nhn").get();
-    Elements movieListDoc = doc.select(".lst_detail_t1 li");
+
+  @Scheduled(fixedDelay = 5000)
+  public void movieScheduler() throws IOException {
+    // 네이버 영화 Docs
+    Document docNaver = Jsoup.connect("https://movie.naver.com/movie/running/current.nhn").get();
+    Elements movieListDocNaver = docNaver.select(".lst_detail_t1 li");
+    // 다음 영화 Docs
+    Document docDaum = Jsoup.connect("https://movie.daum.net/premovie/released?opt=reserve&page=1").get();
+    Elements movieListDocDaum = docDaum.select(".list_movie");
+    
     MovieDAO movieDAO = sqlSession.getMapper(MovieDAO.class);
-    for(int i = 0 ; i < movieListDoc.size() ; i++) {
-      
-      Elements posterSrcDoc = movieListDoc.get(i).select(".thumb>a>img");
-      Elements movieNameDoc = movieListDoc.get(i).select(".tit>a");
-      Elements movieAgeDoc = movieListDoc.get(i).select(".tit>span");
-      Elements starRatingDoc = movieListDoc.get(i).select(".star_t1>a>.num");
-      Elements audienceDoc = movieListDoc.get(i).select(".num2>em");
-      Elements ticketingDoc = movieListDoc.get(i).select(".info_exp .num");
-      Elements codeDoc = movieListDoc.get(i).select(".tit>a");
-      Elements dateDoc = movieListDoc.get(i).select("dl[class=lst_dsc] dl[class=info_txt1] dd");
+    for (int i = 0; i < movieListDocNaver.size(); i++) {
+      // 네이버 영화 불러오기
+      Elements posterSrcDoc = movieListDocNaver.get(i).select(".thumb>a>img");
+      Elements movieNameDoc = movieListDocNaver.get(i).select(".tit>a");
+      Elements movieAgeDoc = movieListDocNaver.get(i).select(".tit>span");
+      Elements starRatingDoc = movieListDocNaver.get(i).select(".star_t1>a>.num");
+      Elements audienceDoc = movieListDocNaver.get(i).select(".num2>em");
+      Elements ticketingDoc = movieListDocNaver.get(i).select(".info_exp .num");
+      Elements codeDoc = movieListDocNaver.get(i).select(".tit>a");
+      Elements dateDoc = movieListDocNaver.get(i).select("dl[class=lst_dsc] dl[class=info_txt1] dd");
       ArrayList<String> dateAr = new ArrayList<String>();
-      StringTokenizer st = new StringTokenizer(dateDoc.text()+"", "|");
-      while(st.hasMoreTokens()) {
+      StringTokenizer st = new StringTokenizer(dateDoc.text() + "", "|");
+      while (st.hasMoreTokens()) {
         dateAr.add(st.nextToken());
       }
       String date = dateAr.get(2).split(" ")[1];
       date = date.replace(".", "-");
-      
-      
       Movie movie = new Movie();
-      movie.setDate(java.sql.Date.valueOf(date));
+      movie.setDate(date);
       movie.setMovieName(movieNameDoc.text());
-      movie.setPosterImgSrc(posterSrcDoc.attr("src")); 
+      movie.setPosterImgSrc(posterSrcDoc.attr("src"));
       movie.setCodeNaver(Integer.parseInt(codeDoc.attr("href").split("=")[1]));
-      
-      if(movieAgeDoc.text().equals("전체 관람가")) {
+      if (movieAgeDoc.text().equals("전체 관람가")) {
         movie.setMovieAge("KMRB_A.png");
-      }else if(movieAgeDoc.text().equals("12세 관람가")) {
+      } else if (movieAgeDoc.text().equals("12세 관람가")) {
         movie.setMovieAge("KMRB_B.png");
-      }else if(movieAgeDoc.text().equals("15세 관람가")) {
+      } else if (movieAgeDoc.text().equals("15세 관람가")) {
         movie.setMovieAge("KMRB_C.png");
-      }else if(movieAgeDoc.text().equals("청소년 관람불가")) {
+      } else if (movieAgeDoc.text().equals("청소년 관람불가")) {
         movie.setMovieAge("KMRB_D.png");
       }
-      
       movie.setStarRating(Double.valueOf(starRatingDoc.text()));
       movie.setAudience(audienceDoc.text());
-      if(!ticketingDoc.text().trim().equals("")) {
+      if (!ticketingDoc.text().trim().equals("")) {
         movie.setTicketing(ticketingDoc.text());
-      }else {
+      } else {
         movie.setTicketing(null);
       }
+      // 끝-- 네이버영화 불러오기 --
+      
+      // 다음 영화
+/*      Elements movieNameDocDaum = movieListDocDaum.get(i).select(".wrap_movie a[class=name_movie]");
+
+      String[] movieHref = movieNameDocDaum.attr("href").split("/");
+      Document docDaumMovie = Jsoup.connect("https://movie.daum.net/moviedb/main?movieId="+movieHref[movieHref.length-1]).get();
+      Elements movieDateDocDaum = docDaumMovie.getElementsByClass(".txt_main");
+      
+      Movie movieDaum = new Movie();
+      
+      movieDaum.setCodeDaum(Integer.parseInt(movieHref[movieHref.length-1]));
+      movieDaum.setMovieName(movieNameDocDaum.text());
+      System.out.println(movieDaum.getCodeDaum() + " / " + movieDaum.getMovieName()+"?????????");
+      */
+      System.out.println("ㅇㅇ");
+      // 중복확인
       List<Movie> movieList = movieDAO.selectAllMovie();
       boolean check = true;
-      for(Movie mov : movieList) {
-        //System.out.println(mov.getDate() + " / / " + movie.getDate());
-        if(mov.getMovieName().equals(movie.getMovieName()) && mov.getDate().getTime() == movie.getDate().getTime()) {
-            check = false;
-          System.out.println(mov.getDate().toLocalDate().compareTo(movie.getDate().toLocalDate()));
+      for (Movie mov : movieList) {
+        if (mov.getMovieName().equals(movie.getMovieName()) && mov.getDate().equals(movie.getDate())) {
+          check = false;
         }
       }
-      if(check) {
+      // 테이블에 저장
+      if (check) {
         movieDAO.insertMovie(movie);
       }
-      
     }
   }
 }
