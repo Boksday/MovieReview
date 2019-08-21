@@ -14,12 +14,6 @@ public class HomeController {
   @Autowired
   SqlSession sqlSession;
   
-  @RequestMapping(value="interceptorTest")
-  public ModelAndView interceptorTest() throws Exception{
-    ModelAndView mv = new ModelAndView("");
-    return mv;
-  }
-  
   @RequestMapping(value="/")
   public ModelAndView GetMovie() throws Exception{
     MovieDAO movieDAO = sqlSession.getMapper(MovieDAO.class);

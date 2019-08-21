@@ -13,4 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES(#{codeNaver}, #{codeDaum}, #{movieName}, #{posterImgSrc}, #{movieAge}, #{starRating}, #{audience}, #{ticketing}, #{date})
 	</insert>
 	
+	<update id="updateMovie" parameterType="bit.movie.review.dto.Movie">
+		UPDATE movie
+		SET codeNaver=#{codeNaver}, codeDaum=#{codeDaum}, movieName=#{movieName}, posterImgSrc=#{posterImgSrc}, movieAge=#{movieAge}, starRating=#{starRating}, audience=#{audience}, ticketing=#{ticketing}
+		WHERE movieName=#{movieName} and date=#{date}
+	</update>
 </mapper>
