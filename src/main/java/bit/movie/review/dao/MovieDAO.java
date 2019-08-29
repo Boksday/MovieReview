@@ -17,5 +17,7 @@ public interface MovieDAO {
   
   public void updateMovie(Movie movie);
   
+  public void updateMovieWithoutAudience(Movie movie);
+  
   public void deleteMovie(Movie movie);
 }

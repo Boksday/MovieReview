@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.movie.review.dao.DaumDAO">
+	<select id="selectAllDaum" resultType="bit.movie.review.dto.Daum">
+		SELECT *
+		FROM daum
+		ORDER BY date DESC
+	</select>
+	
+	<insert id="insertDaum" parameterType="bit.movie.review.dto.Daum">
+		INSERT INTO daum(code, starRating, movieName, date)
+		VALUES(#{code}, #{starRating}, #{movieName}, #{date})
+	</insert>
+	
+	<update id="updateDaum" parameterType="bit.movie.review.dto.Daum">
+		UPDATE daum
+		SET code = #{code}, starRating = #{starRating}
+		WHERE movieName=#{movieName} and date=#{date}
+	</update>
+</mapper>

@@ -1,18 +1,13 @@
 package bit.movie.review.dto;
 
 public class Movie {
-	private int id;
-	private int codeNaver;
-	private int codeDaum;
+	private String movieName;//영화이름 
+	private String posterImgSrc;//포스터 
+	private String movieAge;//제한연령 
+	private String audience; //누적관객 
+	private String ticketing; //예매율 
 
-	private String movieName;
-	private String posterImgSrc;
-	private String movieAge;
-	private Double starRating;
-	private String audience;
-	private String ticketing;
-
-	private String date;
+	private String date; //개봉날짜 
 	
 	public String getDate() {
 		return date;
@@ -20,30 +15,6 @@ public class Movie {
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getCodeNaver() {
-		return codeNaver;
-	}
-
-	public void setCodeNaver(int codeNaver) {
-		this.codeNaver = codeNaver;
-	}
-
-	public int getCodeDaum() {
-		return codeDaum;
-	}
-
-	public void setCodeDaum(int codeDaum) {
-		this.codeDaum = codeDaum;
 	}
 
 	public String getTicketing() {
@@ -60,14 +31,6 @@ public class Movie {
 
 	public void setAudience(String audience) {
 		this.audience = audience;
-	}
-
-	public Double getStarRating() {
-		return starRating;
-	}
-
-	public void setStarRating(Double starRating) {
-		this.starRating = starRating;
 	}
 
 	public String getMovieAge() {
@@ -92,6 +55,12 @@ public class Movie {
 
 	public void setPosterImgSrc(String posterImgSrc) {
 		this.posterImgSrc = posterImgSrc;
+	}
+
+	@Override
+	public String toString() {
+		return "Movie [movieName=" + movieName + ", posterImgSrc=" + posterImgSrc + ", movieAge=" + movieAge
+				+ ", audience=" + audience + ", ticketing=" + ticketing + ", date=" + date + "]";
 	}
 
 }

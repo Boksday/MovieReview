@@ -6,16 +6,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectAllMovie" resultType="bit.movie.review.dto.Movie">
 		SELECT *
 		FROM MOVIE
+		ORDER BY date DESC
 	</select>
 	
 	<insert id="insertMovie" parameterType="bit.movie.review.dto.Movie">
-		INSERT INTO MOVIE(CODENAVER, CODEDAUM, MOVIENAME, POSTERIMGSRC, MOVIEAGE, STARRATING, AUDIENCE, TICKETING, DATE)
-		VALUES(#{codeNaver}, #{codeDaum}, #{movieName}, #{posterImgSrc}, #{movieAge}, #{starRating}, #{audience}, #{ticketing}, #{date})
+		INSERT INTO MOVIE(MOVIENAME, POSTERIMGSRC, MOVIEAGE, AUDIENCE, TICKETING, DATE)
+		VALUES(#{movieName}, #{posterImgSrc}, #{movieAge}, #{audience}, #{ticketing}, #{date})
 	</insert>
 	
 	<update id="updateMovie" parameterType="bit.movie.review.dto.Movie">
 		UPDATE movie
-		SET codeNaver=#{codeNaver}, codeDaum=#{codeDaum}, movieName=#{movieName}, posterImgSrc=#{posterImgSrc}, movieAge=#{movieAge}, starRating=#{starRating}, audience=#{audience}, ticketing=#{ticketing}
+		SET movieName=#{movieName}, posterImgSrc=#{posterImgSrc}, movieAge=#{movieAge}, audience=#{audience}, ticketing=#{ticketing}
 		WHERE movieName=#{movieName} and date=#{date}
 	</update>
+	
+	<update id="updateMovieWithoutAudience" parameterType="bit.movie.review.dto.Movie">
+		UPDATE movie
+		SET movieName=#{movieName}, movieAge=#{movieAge}, ticketing=#{ticketing}
+		WHERE movieName=#{movieName} and date=#{date}
+	</update>
+	
 </mapper>

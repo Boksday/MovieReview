@@ -7,7 +7,6 @@
     <context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:spring/context-*.xml
-						classpath*:spring/appServlet/*-servlet.xml
 		
 		</param-value>
 	</context-param>
@@ -27,7 +26,6 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>
 				classpath*:spring/appServlet/*-servlet.xml
-				classpath*:spring/context-*.xml
 			</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>

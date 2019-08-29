@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bit.movie.review.dao.NaverDAO">
+	<select id="selectAllNaver" resultType="bit.movie.review.dto.Naver">
+		SELECT *
+		FROM naver
+		ORDER BY date DESC
+	</select>
+	
+	<insert id="insertNaver" parameterType="bit.movie.review.dto.Naver">
+		INSERT INTO naver(code, starRating, movieName, date)
+		VALUES(#{code}, #{starRating}, #{movieName}, #{date})
+	</insert>
+	
+	<update id="updateNaver" parameterType="bit.movie.review.dto.Naver">
+		UPDATE naver
+		SET code = #{code}, starRating = #{starRating}
+		WHERE movieName=#{movieName} and date=#{date}
+	</update>
+</mapper>
