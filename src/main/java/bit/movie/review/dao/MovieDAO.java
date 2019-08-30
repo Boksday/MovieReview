@@ -7,6 +7,8 @@ import bit.movie.review.dto.Movie;
 public interface MovieDAO {
   public List<Movie> selectAllMovie();
   
+  public List<Movie> selectAllMovieJoinNaverDaum();
+  
   public Movie selectOneMovieById(int id);
   
   public Movie selectOneMovieByNaver(int codeNaver);
@@ -17,7 +19,8 @@ public interface MovieDAO {
   
   public void updateMovie(Movie movie);
   
-  public void updateMovieWithoutAudience(Movie movie);
+  public void updateMovieWithoutPoster(Movie movie);
   
   public void deleteMovie(Movie movie);
+  
 }

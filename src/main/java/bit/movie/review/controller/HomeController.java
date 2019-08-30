@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import bit.movie.review.dao.MovieDAO;
+import bit.movie.review.dto.Movie;
 
 @Controller
 public class HomeController {
@@ -19,7 +20,15 @@ public class HomeController {
     MovieDAO movieDAO = sqlSession.getMapper(MovieDAO.class);
     ModelAndView mav = new ModelAndView();
     mav.setViewName("index");
-    mav.addObject("movieList",movieDAO.selectAllMovie());
+    mav.addObject("movieList",movieDAO.selectAllMovieJoinNaverDaum());
     return mav;
+  }
+  
+  @RequestMapping(value="/movieDetail")
+  public ModelAndView GetMovieDetail(Movie movie) throws Exception{
+	  System.out.println(movie.getNaverCode());
+	  ModelAndView mav = new ModelAndView();
+	  mav.setViewName("movieDetail");
+	  return mav;
   }
 }

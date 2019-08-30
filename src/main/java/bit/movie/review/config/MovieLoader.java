@@ -1,5 +1,9 @@
 package bit.movie.review.config;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -97,7 +101,7 @@ public class MovieLoader {
 
 			List<Movie> movieList = movieDAO.selectAllMovie();
 			for (Movie mov : movieList) {
-				if (mov.getMovieName().equals(movie.getMovieName()) && mov.getDate().equals(movie.getDate())) {
+				if (mov.getMovieName().replace(" ","").equals(movie.getMovieName().replace(" ","")) && mov.getDate().equals(movie.getDate())) {
 					insertCheck = false;
 					updateCheck = true;
 				}
@@ -121,7 +125,7 @@ public class MovieLoader {
 			updateCheck = false;
 
 			for (Naver nav : naverList) {
-				if (naver.getMovieName().equals(nav.getMovieName()) && naver.getDate().equals(nav.getDate())) {
+				if (naver.getMovieName().replace(" ","").equals(nav.getMovieName().replace(" ","")) && naver.getDate().equals(nav.getDate())) {
 					insertCheck = false;
 					updateCheck = true;
 				}
@@ -155,9 +159,13 @@ public class MovieLoader {
 						.connect("https://movie.daum.net/moviedb/main?movieId=" + movieHref[movieHref.length - 1])
 						.get();
 				Elements movieDateDocDaum = docDaumMovie.select(".list_movie");
-				Elements movieAge  = docDaumMovie.select(".list_movie dd:nth-child(6)");
-				String daumDate = movieDateDocDaum.select(".txt_main:nth-child(odd)").text();
+				Elements movieAgeDoc = docDaumMovie.select(".list_movie dd:nth-child(6)");
+				String daumDate = movieDateDocDaum.select(".txt_main:nth-child(5)").text();
+				String daumDateRebirth = movieDateDocDaum.select(".txt_main:nth-child(6)").text(); // 재개봉영
 				daumDate = daumDate.trim().split(" ")[0].replace(".", "-");
+				if(daumDateRebirth.contains("재개봉")) {
+					daumDate = daumDateRebirth.trim().split(" ")[0].replace("." ,"-");
+				}
 
 				Daum daum = new Daum();
 				daum.setMovieName(movieNameDocDaum.text());
@@ -170,7 +178,7 @@ public class MovieLoader {
 				List<Daum> daumList = daumDAO.selectAllDaum();
 
 				for (Daum da : daumList) {
-					if (da.getMovieName().equals(daum.getMovieName()) && da.getDate().equals(daum.getDate())) {
+					if (da.getMovieName().replace(" ","").equals(daum.getMovieName().replace(" ","")) && da.getDate().equals(daum.getDate())) {
 						insertCheck = false;
 						updateCheck = true;
 					}
@@ -185,29 +193,54 @@ public class MovieLoader {
 				if(ticketingDocDaum.text().trim().contains("・")) {
 					ticketing = ticketingDocDaum.text().split("・")[1].split(" ")[2].replace("%","").trim();
 				}
-
+				//누적 관객 수를 받아오기위한 JSON 요청
+				String json = "";
+				URL url = new URL("https://movie.daum.net/moviedb/main/totalAudience.json?movieId="+daum.getCode());
+				HttpURLConnection con = (HttpURLConnection) url.openConnection();
+				con.setDoOutput(true);
+				con.setInstanceFollowRedirects(false);
+				con.setRequestMethod("GET");
+				con.setRequestProperty("Content-Type", "application/json");
+				
+				BufferedReader br = new BufferedReader(new InputStreamReader((con.getInputStream())));
+				String output;
+				while((output = br.readLine()) != null) {
+					json+=output;
+				}
+				con.disconnect();
+				
 				Elements posterDoc = docDaumMovie.select(".thumb_summary .img_summary");
-				String posterSrc = posterDoc.attr("src").substring(2, posterDoc.attr("src").length());
 				Movie movie = new Movie();
 				movie.setMovieName(movieNameDocDaum.text());
 				movie.setDate(daumDate);
 				movie.setTicketing(ticketing);
-				movie.setPosterImgSrc(posterSrc);
-			
-				if(movieAge.text().contains("관람")) {
-					movie.setMovieAge(movieAge.text().split(",")[1].trim());
+				movie.setPosterImgSrc("http:"+posterDoc.attr("src"));
+				movie.setAudience(json.split("\"")[7]+"명");
+				
+				String movieAge="";
+				if(movieAgeDoc.text().contains("관람")) {
+					movieAge = movieAgeDoc.text().split(",")[1].trim();
+					
 				}else {
 					Elements movieAgeException = docDaumMovie.select(".list_movie dd:nth-child(7)");
-					movie.setMovieAge(movieAgeException.text().split(",")[1].trim());
+					movieAge = movieAgeException.text().split(",")[1].trim();
 				}
-				System.out.println(movie.toString());
+				if (movieAge.equals("전체관람가")) {
+					movie.setMovieAge("KMRB_A.png");
+				} else if (movieAge.equals("12세이상관람가")) {
+					movie.setMovieAge("KMRB_B.png");
+				} else if (movieAge.equals("15세이상관람가")) {
+					movie.setMovieAge("KMRB_C.png");
+				} else if (movieAge.equals("청소년관람불가")) {
+					movie.setMovieAge("KMRB_D.png");
+				}
 				
 				insertCheck = true;
 				updateCheck = false;
 				List<Movie> movieList = movieDAO.selectAllMovie();
 				
 				for(Movie mov : movieList) {
-					if(mov.getMovieName().equals(movie.getMovieName()) && mov.getDate().equals(movie.getDate())) {
+					if(mov.getMovieName().replace(" ","").equals(movie.getMovieName().replace(" ","")) && mov.getDate().equals(movie.getDate())) {
 						insertCheck = false;
 						updateCheck = true;
 					}
@@ -215,11 +248,12 @@ public class MovieLoader {
 				if(insertCheck) {
 					movieDAO.insertMovie(movie);
 				}else if(updateCheck) {
-					movieDAO.updateMovieWithoutAudience(movie);
+					movieDAO.updateMovieWithoutPoster(movie);
 				}
 				
 			}
 		}
 		return daumDAO.selectAllDaum();
 	}
+	
 }

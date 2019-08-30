@@ -20,10 +20,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE movieName=#{movieName} and date=#{date}
 	</update>
 	
-	<update id="updateMovieWithoutAudience" parameterType="bit.movie.review.dto.Movie">
+	<update id="updateMovieWithoutPoster" parameterType="bit.movie.review.dto.Movie">
 		UPDATE movie
-		SET movieName=#{movieName}, movieAge=#{movieAge}, ticketing=#{ticketing}
+		SET movieName=#{movieName}, movieAge=#{movieAge}, ticketing=#{ticketing}, audience=#{audience}
 		WHERE movieName=#{movieName} and date=#{date}
 	</update>
-	
+	<select id="selectAllMovieJoinNaverDaum" resultType="bit.movie.review.dto.Movie">
+		SELECT m.movieName, m.date, posterImgSrc, movieAge, audience, ticketing, 
+			   n.code as "naverCode", n.starRating as "naverStarRating", 
+			   d.code as "daumCode", d.starRating as "daumStarRating" 
+		FROM movie m LEFT OUTER JOIN naver n ON m.movieName = n.movieName AND m.date = n.date 
+			 	     LEFT OUTER JOIN daum d ON m.movieName = d.movieName AND m.date = m.date;
+	</select>
+	<select id="selectOneMovieJoinNaverDaum" parameterType="bit.movie.review.dto.Movie" resultType="bit.movie.review.dto.Movie">
+		SELECT m.movieName, m.date, posterImgSrc, movieAge, audience, ticketing, 
+			   n.code as "naverCode", n.starRating as "naverStarRating", 
+			   d.code as "daumCode", d.starRating as "daumStarRating" 
+		FROM movie m LEFT OUTER JOIN naver n ON m.movieName = n.movieName AND m.date = n.date 
+			 	     LEFT OUTER JOIN daum d ON m.movieName = d.movieName AND m.date = m.date
+		WHERE n.code = #{naverCode};
+	</select>
 </mapper>

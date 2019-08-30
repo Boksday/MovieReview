@@ -9,6 +9,44 @@ public class Movie {
 
 	private String date; //개봉날짜 
 	
+	private String naverCode;
+	private String naverStarRating;
+	private String daumCode;
+	private String daumStarRating;
+	
+
+	public String getNaverCode() {
+		return naverCode;
+	}
+
+	public void setNaverCode(String naverCode) {
+		this.naverCode = naverCode;
+	}
+
+	public String getNaverStarRating() {
+		return naverStarRating;
+	}
+
+	public void setNaverStarRating(String naverStarRating) {
+		this.naverStarRating = naverStarRating;
+	}
+
+	public String getDaumCode() {
+		return daumCode;
+	}
+
+	public void setDaumCode(String daumCode) {
+		this.daumCode = daumCode;
+	}
+
+	public String getDaumStarRating() {
+		return daumStarRating;
+	}
+
+	public void setDaumStarRating(String daumStarRating) {
+		this.daumStarRating = daumStarRating;
+	}
+
 	public String getDate() {
 		return date;
 	}
