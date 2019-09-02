@@ -9,6 +9,8 @@ public interface MovieDAO {
   
   public List<Movie> selectAllMovieJoinNaverDaum();
   
+  public List<Movie> selectAllMovieJoinDaum();
+  
   public Movie selectOneMovieById(int id);
   
   public Movie selectOneMovieByNaver(int codeNaver);

@@ -40,4 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 	     LEFT OUTER JOIN daum d ON m.movieName = d.movieName AND m.date = m.date
 		WHERE n.code = #{naverCode};
 	</select>
+	<select id="selectAllMovieJoinDaum" resultType="bit.movie.review.dto.Movie">
+			SELECT m.movieName, m.date, posterImgSrc, movieAge, audience, ticketing, 
+				   d.code as "daumCode", d.starRating as "daumStarRating" 
+			FROM movie m JOIN daum d ON m.movieName = d.movieName AND m.date = m.date;
+	</select>
+	
 </mapper>

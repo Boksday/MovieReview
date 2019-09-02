@@ -7,5 +7,7 @@
 		<mapper resource="mybatis/mapper/MovieMapper_sql.xml" />
 		<mapper resource="mybatis/mapper/NaverMapper_sql.xml" />
 		<mapper resource="mybatis/mapper/DaumMapper_sql.xml" />
+		<mapper resource="mybatis/mapper/ReviewMapper_sql.xml" />
+		
 	</mappers>
 </configuration>

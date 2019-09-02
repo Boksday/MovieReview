@@ -28,7 +28,7 @@ public class MovieLoader {
 	@Autowired
 	private SqlSession sqlSession;
 
-	@Scheduled(fixedDelay = 10000)
+	//@Scheduled(fixedDelay = 10000)
 	public void naverMovieLoader() throws Exception {
 		List<Movie> naverMovieList = naverMovie();
 	}
@@ -166,7 +166,9 @@ public class MovieLoader {
 				if(daumDateRebirth.contains("재개봉")) {
 					daumDate = daumDateRebirth.trim().split(" ")[0].replace("." ,"-");
 				}
-
+				if(daumDate.length() < 10) {
+					daumDate += "-01";
+				}
 				Daum daum = new Daum();
 				daum.setMovieName(movieNameDocDaum.text());
 				daum.setDate(daumDate);
@@ -208,20 +210,25 @@ public class MovieLoader {
 					json+=output;
 				}
 				con.disconnect();
-				
 				Elements posterDoc = docDaumMovie.select(".thumb_summary .img_summary");
 				Movie movie = new Movie();
 				movie.setMovieName(movieNameDocDaum.text());
 				movie.setDate(daumDate);
 				movie.setTicketing(ticketing);
 				movie.setPosterImgSrc("http:"+posterDoc.attr("src"));
-				movie.setAudience(json.split("\"")[7]+"명");
+				if(json.contains("totalAudience")) {
+					movie.setAudience(json.split("\"")[7]+"명");
+				}else {
+					movie.setAudience("(자료없음)");
+				}
 				
 				String movieAge="";
+				
 				if(movieAgeDoc.text().contains("관람")) {
 					movieAge = movieAgeDoc.text().split(",")[1].trim();
 					
-				}else {
+				}
+				else {
 					Elements movieAgeException = docDaumMovie.select(".list_movie dd:nth-child(7)");
 					movieAge = movieAgeException.text().split(",")[1].trim();
 				}
