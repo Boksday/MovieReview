@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+body{
+	font-family: 'Nanum Gothic';
+}
+
+.movieHeadWrapper .moviePoster{
+	width:150px;
+	float:left;
+	display:inline-block;
+}
+.movieAge{
+	width:32px;
+	float:left;
+}
+
+.movieName {
+	font-size : 32px;
+	font-weight: bold;
+}
+
+.movieContentsWrapper{
+	margin-left:10px;
+	display:inline-block;
+}
+
+.movieContentsWrapper div{
+	margin:10px;
+}

@@ -27,6 +27,11 @@ a:link {
   float: left;
 }
 
+.posterWrapper img{
+	width : 100px;
+	height : 141px;
+}
+
 .contentWrapper {
   margin-top: 20px;
   width: 80%;

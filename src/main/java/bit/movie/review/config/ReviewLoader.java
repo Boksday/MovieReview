@@ -22,7 +22,7 @@ public class ReviewLoader {
 	@Autowired
 	SqlSession sqlSession;
 	
-	@Scheduled(fixedDelay = 10000)
+//	@Scheduled(fixedDelay = 10000)
 	public void naverReviewLoader() throws Exception {
 		NaverDAO naverDAO = sqlSession.getMapper(NaverDAO.class);
 		ReviewDAO reviewDAO = sqlSession.getMapper(ReviewDAO.class);
@@ -62,9 +62,9 @@ public class ReviewLoader {
 					review.setCreated(docNaverReviewCreated.text().replace(".", "-"));
 					review.setCode(naverList.get(n).getCode());
 					
-					System.out.println(review.toString());
-					
-					//reviewDAO.insertReview(review);
+					if(reviewDAO.selectOneReviewById(review).size() == 0 ) {
+						reviewDAO.insertReview(review);
+					}
 				}
 				
 				if(page >=10) {
@@ -98,10 +98,18 @@ public class ReviewLoader {
 				Elements docStarRating = docDaum.select(".emph_grade");
 				Elements docContents = docDaum.select(".desc_review");
 				Elements docCreated = docDaum.select(".info_append");
+				Elements docId = docDaum.select(".review_info .link_delete");
+				
 				
 				for(int j = 0 ; j < docReview.size() ; j++) {
+					String id = docId.get(j).attr("onclick");
+					int start = id.indexOf("(")+1;
+					int end = id.indexOf(")");
+					id = id.substring(start, end);
 					
 					Review review = new Review();
+					
+					review.setId(Integer.parseInt(id));
 					review.setCode(daumList.get(i).getCode());
 					review.setContents(docContents.get(j).text().trim());
 					review.setCreated(docCreated.get(j).text().replace(".","-").replace(",",""));
@@ -109,7 +117,7 @@ public class ReviewLoader {
 					review.setStarRating(Integer.parseInt(docStarRating.get(j).text()));
 					review.setWriter(docWriter.get(j).text());
 
-					if(reviewDAO.selectOneReviewByCodeWriter(review).size() == 0) {
+					if(reviewDAO.selectOneReviewById(review).size() == 0) {
 						reviewDAO.insertReview(review);
 					}
 				}

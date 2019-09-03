@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			   d.code as "daumCode", d.starRating as "daumStarRating" 
 		FROM movie m LEFT OUTER JOIN naver n ON m.movieName = n.movieName AND m.date = n.date 
 			 	     LEFT OUTER JOIN daum d ON m.movieName = d.movieName AND m.date = m.date
-		WHERE n.code = #{naverCode};
+		WHERE n.code = #{code} or d.code = #{code};
 	</select>
 	<select id="selectAllMovieJoinDaum" resultType="bit.movie.review.dto.Movie">
 			SELECT m.movieName, m.date, posterImgSrc, movieAge, audience, ticketing, 

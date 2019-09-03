@@ -7,7 +7,7 @@ import bit.movie.review.dto.Review;
 public interface ReviewDAO {
 	public List<Review> selectAllReview();
 	
-	public List<Review> selectOneReviewByCodeWriter(Review review);
+	public List<Review> selectOneReviewById(Review review);
 	
 	public Review selectOneReview(int code);
 	

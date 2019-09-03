@@ -17,6 +17,8 @@ public interface MovieDAO {
   
   public Movie selectOneMovieByDaum(int codeDaum);
   
+  public Movie selectOneMovieJoinNaverDaum(int code);
+  
   public void insertMovie(Movie movie);
   
   public void updateMovie(Movie movie);

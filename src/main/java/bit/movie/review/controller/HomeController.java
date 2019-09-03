@@ -25,10 +25,13 @@ public class HomeController {
   }
   
   @RequestMapping(value="/movieDetail")
-  public ModelAndView GetMovieDetail(Movie movie) throws Exception{
-	  System.out.println(movie.getNaverCode());
+  public ModelAndView GetMovieDetail(int code) throws Exception{
+	  MovieDAO movieDAO = sqlSession.getMapper(MovieDAO.class);
+	  
+	  Movie selectedMovie = movieDAO.selectOneMovieJoinNaverDaum(code);
 	  ModelAndView mav = new ModelAndView();
 	  mav.setViewName("movieDetail");
+	  mav.addObject("movie", selectedMovie);
 	  return mav;
   }
 }

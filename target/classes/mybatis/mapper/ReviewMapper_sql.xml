@@ -13,10 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE code = #{code}
 	</select>
 
-	<select id="selectOneReviewByCodeWriter" resultType="bit.movie.review.dto.Review">
+	<select id="selectOneReviewById" resultType="bit.movie.review.dto.Review">
 		SELECT id, code, writer, contents, created, starRating
 		FROM review
-		WHERE code = #{code} and writer = #{writer}
+		WHERE id = #{id}
 	</select>	
 	<insert id="insertReview" parameterType="bit.movie.review.dto.Review">
 		INSERT INTO review(id, code, writer, contents, created, starRating)
