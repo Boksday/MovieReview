@@ -33,7 +33,7 @@ public class MovieLoader {
 		List<Movie> naverMovieList = naverMovie();
 	}
 
-	@Scheduled(fixedDelay = 10000)
+	//@Scheduled(fixedDelay = 10000)
 	public void daumMovieLoader() throws Exception {
 		daumMovie();
 	}
@@ -216,6 +216,7 @@ public class MovieLoader {
 				movie.setDate(daumDate);
 				movie.setTicketing(ticketing);
 				movie.setPosterImgSrc("http:"+posterDoc.attr("src"));
+			
 				if(json.contains("totalAudience")) {
 					movie.setAudience(json.split("\"")[7]+"명");
 				}else {

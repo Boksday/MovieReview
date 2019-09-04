@@ -1,29 +1,96 @@
 @charset "UTF-8";
 
-body{
+body {
 	font-family: 'Nanum Gothic';
 }
 
-.movieHeadWrapper .moviePoster{
-	width:150px;
-	float:left;
-	display:inline-block;
+.movieWrapper {
+	line-height: 25.5px;
 }
-.movieAge{
-	width:32px;
-	float:left;
+
+.movieHeadWrapper {
+	display: inline-block;
+}
+
+.movieHeadWrapper .moviePoster {
+	width: 150px;
+	float: left;
+	display: inline-block;
+}
+
+.movieAge {
+	width: 32px;
 }
 
 .movieName {
-	font-size : 32px;
+	font-size: 32px;
 	font-weight: bold;
 }
 
-.movieContentsWrapper{
-	margin-left:10px;
-	display:inline-block;
+.movieContentsWrapper {
+	margin-left: 10px;
+	display: inline-block;
 }
 
-.movieContentsWrapper div{
-	margin:10px;
+.movieContentsWrapper div {
+	margin: 10px;
+}
+
+.corp {
+	width: 38px;
+	vertical-align: middle;
+}
+
+.reviewHeadWrapper {
+	display: inline-block;
+}
+
+.writer {
+	display: inline-block;
+	font-weight: bold;
+}
+
+.reviewDetail {
+	margin: 10px;
+	width: 550px;
+}
+
+.reviewWrapper {
+	margin: 10px;
+	border:1px solid;
+	padding:20px;
+	width:700px;
+}
+
+.created {
+	font-size: 12px;
+	font-weight: normal;
+	margin-left: 10px;
+	color: gray;
+}
+
+.star {
+	float: left; background :
+	url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png) 0 -20px
+	no-repeat;
+	overflow: hidden;
+	height: 12px;
+	background:
+		url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png) 0 -20px
+		no-repeat;
+}
+
+.starOff {
+	float: left; overflow : hidden;
+	width: 75px;
+	height: 12px;
+	margin-top: 4px;
+	background:
+		url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png)
+		no-repeat;
+	overflow: hidden;
+}
+
+.starRatingWrapper{
+	margin-left:10px;
 }

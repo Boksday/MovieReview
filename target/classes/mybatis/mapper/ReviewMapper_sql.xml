@@ -4,23 +4,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bit.movie.review.dao.ReviewDAO">
 	<select id="selectAllReview" resultType="bit.movie.review.dto.Review">
-		SELECT id, code, writer, contents, created, starRating
+		SELECT id, code, writer, contents, created, starRating, movieName, corp
 		FROM review
 	</select>
-	<select id="selectOneReview" resultType="bit.movie.review.dto.Review">
-		SELECT id, code, writer, contents, created, starRating
+	<select id="selectOneMovieReview" resultType="bit.movie.review.dto.Review">
+		SELECT id, code, writer, contents, created, starRating, movieName, corp
 		FROM review
-		WHERE code = #{code}
+		WHERE movieName=#{movieName}
+		ORDER BY created DESC;
 	</select>
 
 	<select id="selectOneReviewById" resultType="bit.movie.review.dto.Review">
-		SELECT id, code, writer, contents, created, starRating
+		SELECT id, code, writer, contents, created, starRating, movieName, corp
 		FROM review
 		WHERE id = #{id}
 	</select>	
 	<insert id="insertReview" parameterType="bit.movie.review.dto.Review">
-		INSERT INTO review(id, code, writer, contents, created, starRating)
-		VALUES(#{id}, #{code}, #{writer}, #{contents}, #{created}, #{starRating})
+		INSERT INTO review(id, code, writer, contents, created, starRating, movieName, corp)
+		VALUES(#{id}, #{code}, #{writer}, #{contents}, #{created}, #{starRating}, #{movieName}, #{corp})
 	</insert>
 	
 </mapper>

@@ -22,7 +22,7 @@ public class ReviewLoader {
 	@Autowired
 	SqlSession sqlSession;
 	
-//	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 120000)
 	public void naverReviewLoader() throws Exception {
 		NaverDAO naverDAO = sqlSession.getMapper(NaverDAO.class);
 		ReviewDAO reviewDAO = sqlSession.getMapper(ReviewDAO.class);
@@ -33,11 +33,10 @@ public class ReviewLoader {
 		Document docNaver = Jsoup.connect("https://movie.naver.com/movie/bi/mi/pointWriteFormList.nhn?code=173576&type=after&onlyActualPointYn=N&order=newest").get();
 		
 		Elements docNaverHasNext = docNaver.select(".pg_next"); 
-		int page = 0 ;
 		for(int n = 0 ; n < naverList.size() ; n++) {
+			int page = 0 ;
 			while(true) {
 				page++;
-				
 				Document docNaverPaging = Jsoup.connect("https://movie.naver.com/movie/bi/mi/pointWriteFormList.nhn?code="+naverList.get(n).getCode()+"&type=after&onlyActualPointYn=N&order=newest&page="+page).get();
 				docNaverHasNext = docNaverPaging.select(".pg_next");
 				Elements docNaverReviewList = docNaverPaging.select(".score_result li");
@@ -48,7 +47,7 @@ public class ReviewLoader {
 					Elements docNaverReviewWriter = docNaverReviewList.get(i).select(".score_reple dt span");
 					Elements docNaverReviewCreated = docNaverReviewList.get(i).select(".score_reple dt em:nth-child(2)");
 					Elements docNaverReviewID = docNaverReviewList.get(i).select(".score_reple dt a");
-					
+				
 					String docId = docNaverReviewID.attr("onclick");
 					int start = docId.indexOf("(")+1;
 					int end = docId.indexOf(",");
@@ -56,12 +55,13 @@ public class ReviewLoader {
 					
 					Review review = new Review();
 					review.setId(id);
+					review.setMovieName(naverList.get(n).getMovieName());
 					review.setStarRating(Integer.parseInt(docNaverReviewStarRating.text()));
 					review.setContents(docNaverReviewContents.text());
 					review.setWriter(docNaverReviewWriter.text());
 					review.setCreated(docNaverReviewCreated.text().replace(".", "-"));
 					review.setCode(naverList.get(n).getCode());
-					
+					review.setCorp("네이버");
 					if(reviewDAO.selectOneReviewById(review).size() == 0 ) {
 						reviewDAO.insertReview(review);
 					}
@@ -76,7 +76,7 @@ public class ReviewLoader {
 		}
 	}
 	
-//	@Scheduled(fixedDelay = 60000)
+	@Scheduled(fixedDelay = 120000)
 	public void daumReviewLoader() throws Exception {
 		System.out.println("다음 리뷰 접근 ");
 		DaumDAO daumDAO = sqlSession.getMapper(DaumDAO.class);
@@ -113,10 +113,10 @@ public class ReviewLoader {
 					review.setCode(daumList.get(i).getCode());
 					review.setContents(docContents.get(j).text().trim());
 					review.setCreated(docCreated.get(j).text().replace(".","-").replace(",",""));
-					
+					review.setMovieName(daumList.get(i).getMovieName());
 					review.setStarRating(Integer.parseInt(docStarRating.get(j).text()));
 					review.setWriter(docWriter.get(j).text());
-
+					review.setCorp("다음");
 					if(reviewDAO.selectOneReviewById(review).size() == 0) {
 						reviewDAO.insertReview(review);
 					}

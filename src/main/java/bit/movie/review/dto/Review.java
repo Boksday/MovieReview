@@ -7,8 +7,21 @@ public class Review {
 	private String contents;
 	private String created;
 	private int starRating;
+	private String movieName;
+	private String corp;
 	
-	
+	public String getCorp() {
+		return corp;
+	}
+	public void setCorp(String corp) {
+		this.corp = corp;
+	}
+	public String getMovieName() {
+		return movieName;
+	}
+	public void setMovieName(String movieName) {
+		this.movieName = movieName;
+	}
 	public int getId() {
 		return id;
 	}
