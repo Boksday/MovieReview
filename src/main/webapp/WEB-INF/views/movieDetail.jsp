@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>${movie.movieName}리뷰보기</title>
+<title>${movie.movieName} 리뷰보기</title>
 <link rel="stylesheet" href="resources/css/movieDetail.css" />
 </head>
 <body>
@@ -16,15 +16,17 @@
 			<div class='movieContentsWrapper'>
 				<img class='movieAge' src="/resources/images/${movie.movieAge}" /> 
 				<span class="movieName">${movie.movieName}</span>
-				<div>${movie.date.replace('-','.')}개봉</div>
-				<div>누적관객 ${movie.audience}</div>
-				<div>예매율 ${movie.ticketing}%</div>
-				<div>네이버 평점 : ${movie.naverStarRating}</div>
-				<div>다음 평점 : ${movie.daumStarRating}</div>
+				<div class='date'>${movie.date.replace('-','.')}개봉</div>
+				<div class='audience'>누적관객 <span class="audienceNum">${movie.audience}</span></div>
+				<div class='ticketing'>예매율 <span class="ticketingNum">${movie.ticketing}</span>%</div>
+				<div class='naverStarRating'>네이버 평점 : ${movie.naverStarRating}</div>
+				<div class='daumStarRating'>다음 평점 : ${movie.daumStarRating}</div>
 			</div>
 	</div>
 	<hr>
+	<div class="reviewTitle">
 		리뷰
+	</div>
 		<c:choose>
 			<c:when test="${not empty reviewList}"> 
 				<c:forEach var="review" items="${reviewList}">

@@ -6,6 +6,7 @@ body {
 
 .movieWrapper {
 	line-height: 25.5px;
+	padding : 30px;
 }
 
 .movieHeadWrapper {
@@ -60,6 +61,7 @@ body {
 	border:1px solid;
 	padding:20px;
 	width:700px;
+	border-radius:5px;
 }
 
 .created {
@@ -93,4 +95,42 @@ body {
 
 .starRatingWrapper{
 	margin-left:10px;
+}
+
+.movieAge{
+	vertical-align : -4px;
+}
+
+.date{
+	font-weight : bold;
+	font-size : 14px;
+}
+
+.audience {
+	font-weight : bold;
+}
+
+.ticketing{
+	font-weight : bold;
+}
+
+.naverStarRating{
+	font-weight : bold;
+}
+
+.daumStarRating{
+	font-weight : bold;
+}
+
+.audienceNum{
+	font-size:20px;
+}
+
+.ticketingNum{
+	font-size : 20px;
+}
+
+.reviewTitle{
+	font-size:36px;
+	margin-left:30px;
 }

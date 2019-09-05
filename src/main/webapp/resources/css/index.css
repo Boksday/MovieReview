@@ -1,102 +1,156 @@
 body {
-  font-family: 'Nanum Gothic'
+	font-family: 'Nanum Gothic'
 }
 
 a:visited {
-  color: black;
+	color: black;
 }
 
 a:link {
-  color: black;
+	color: black;
 }
 
 .movieWrapper {
-  width: 100%;
-  height: 100%;
-  display: inline-table;
-  margin-top: 10px;
+	width: 100%;
+	height: 100%;
+	display: inline-table;
+	margin-top: 10px;
 }
 
 .movieWrapper:hover {
-  background-color: #e1e1e1;
-  cursor: pointer;
+	background-color: #e1e1e1;
+	cursor: pointer;
 }
 
 .posterWrapper {
-  width: 10%;
-  float: left;
+	display:inline-block;
 }
 
-.posterWrapper img{
-	width : 100px;
-	height : 141px;
+.posterWrapper img {
+	width: 130px;
+	height: 200px;
+	vertical-align: middle;
+	
 }
 
 .contentWrapper {
-  margin-top: 20px;
-  width: 80%;
-  float: left;
-  margin-left: 10px;
+	font-size:12px;
 }
-
+.contentsWrapper{
+	display:inline-block;
+	margin:10px;
+}
 .rating {
-  width: 25px;
-  float: left;
+	width: 25px;
+	vertical-align: -7px;
+	
 }
 
 .title {
-  float: left;
-  font-size: 17px;
-  font-weight: bold;
-  margin-left: 5px;
+	font-size: 17px;
+	font-weight: bold;
+	margin-left: 5px;
 }
 
 .star {
-  background:
-    url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png) 0
-    -20px no-repeat;
-  display: block;
-  overflow: hidden;
-  height: 12px;
+	background:
+		url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png) 0 -20px
+		no-repeat;
+	display: block;
+	overflow: hidden;
+	height: 12px;
 }
 
 .starOff {
-  float: left;
-  overflow: hidden;
-  width: 75px;
-  height: 12px;
-  margin-top: 4px;
-  background:
-    url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png)
-    no-repeat;
+	float: left;
+	overflow: hidden;
+	width: 75px;
+	height: 12px;
+	margin-top: 4px;
+	background:
+		url(https://ssl.pstatic.net/static/movie/2012/09/sp_star.png)
+		no-repeat;
 }
 
 .starNum {
-  font-size: 17px;
-  font-weight: bold;
-  margin-left: 10px;
+	font-size: 15px;
+	font-weight: bold;
+	margin-left: 10px;
 }
 
+
+
 .audience {
-  margin-left: 10px;
-  color: gray;
-  font-size: 14px;
+	color: gray;
+	font-size: 12px;
 }
 
 .audienceCount {
-  color: gray;
-  font-size: 17px;
-  font-weight: bold;
+	color: gray;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .ticketingText {
-  margin-left: 10px;
-  font-size: 13px;
-  font-weight: bold;
-  user-select: none;
+	margin-left: 10px;
+	font-size: 12px;
+	font-weight: bold;
+	user-select: none;
 }
 
 .ticketing {
-  font-size: 17px;
-  font-weight: bold;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.ticket{
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+#poster{
+	width:200px;
+	height:260px;
+
+}
+a{
+	text-decoration:none;
+	color:black;
+}
+#movieAge{
+	width:30px;
+	vertical-align:-8px;
+	display:
+}
+.movieAge{
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	word-wrap:normal;
+	width:190px;
+	overflow:hidden;
+	margin-left:15px
+}
+.movieName{
+	font-weight:bold;
+	font-size:23px;
+}
+
+.movie{
+	border:1px solid;
+	display:inline-block;
+	padding:10px;
+	width:250px;
+	text-align:center;
+	margin:30px;
+}
+
+.contents{
+	margin-top:10px;
+}
+
+.noStarRating{
+	color:gray;
+	margin : 5px 0 5px 0;
+	font-size : 12px;
+	line-height:12px
 }
