@@ -8,13 +8,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/index.css" />
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 	<center><h1>현재 상영영화</h1></center>
 	<div class="searchMovie">
-		<input type=text id="searchBox">
+		<input type=text id="searchBox" placeholder="찾으시는 영화의 제목을 입력하세요.  ">
 	</div>
-	<div id="movieWrapper">
+	<div id="movieWrapper" >
 	
 	<c:forEach items="${movieList}" var="movieList">
 		<c:choose>
@@ -25,8 +26,8 @@
 				<c:set var="code" value="${movieList.daumCode}"></c:set>
 			</c:otherwise>
 		</c:choose>
-		<a href="/movieDetail?code=${code}">
-			<div class="movie">
+		<a href="/movieDetail?code=${code}" class="movie">
+			<div>
 				<div class="poster">
 					<img id="poster" src="${movieList.posterImgSrc}"/>
 				</div>
@@ -82,6 +83,7 @@
 				</c:choose>
 				</div>
 			</div>
+		  </a>
 	</c:forEach>
 	</div>
 	<script type="text/javascript" src="resources/js/index.js" ></script>

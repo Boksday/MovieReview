@@ -154,3 +154,25 @@ a{
 	font-size : 12px;
 	line-height:12px
 }
+
+.searchMovie{
+	text-align : center;
+}
+#searchBox{
+	border : 1px solid gray;
+	border-radius: 5px;
+	line-height:40px;
+	width:50%;
+	padding-left : 20px;
+	font-size:18px;
+	outline:none;
+}
+
+#searchBox::placeholder{
+	text-align:center;
+}
+
+#searchBox:focus{
+	border : 1px solid tomato;
+	border-radius:5px;
+}

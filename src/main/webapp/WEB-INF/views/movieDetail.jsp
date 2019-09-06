@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>${movie.movieName} 리뷰보기</title>
 <link rel="stylesheet" href="resources/css/movieDetail.css" />
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 	<div class='movieWrapper'>
@@ -29,6 +30,8 @@
 	</div>
 		<c:choose>
 			<c:when test="${not empty reviewList}"> 
+			<div class="reviewsWrapper">
+			
 				<c:forEach var="review" items="${reviewList}">
 					<div class="reviewWrapper">
 						<div class="reviewHeadWrapper">
@@ -50,11 +53,91 @@
 						</div>
 					</div>
 				</c:forEach>
+				</div>
 			</c:when>
 			<c:otherwise>
 			<div class="nonReview">등록된 리뷰가 없습니다. </div>
 			</c:otherwise>
 		</c:choose>
+		<div class="buttonWrapper">
+			<span class="pageNum"></span> / <span class="totalNum"></span>
+		</div>
+		
+		<script>
+			var review = $(".reviewWrapper");
+			var totalpage = Math.ceil(review.length/5);
+			var page = 1 ; 
+			var pages = new Array();
+			var reviewArray = new Array();
+			var temp = 1;
+			$(".reviewsWrapper").empty();
+			
+			if(totalpage > 0){
+				$(".pageNum").append(page);
+				$(".totalNum").append(totalpage);
+				$(".buttonWrapper").append("<button id='next'>다음</button>");
+				$("#next").click(nextButton);
+			}
+			
+			
+			for(var i = 1 ; i <= totalpage ; i++){
+				for(var j = 1 ; j <= 5 ; j++){
+					var reviewPage = {
+							page : i,
+							review : review.get(temp-1), 
+					}
+					reviewArray.push(reviewPage);
+					temp++;
+				}
+				pages.push(page);
+			}
 
+			createdReview(page);
+			
+			function createdReview(pg){
+				console.log(page + " /"); 
+				for(var i = 0 ; i < reviewArray.length ; i++){
+					if(reviewArray[i].page === pg){
+						$(".reviewsWrapper").append(reviewArray[i].review); 
+					}
+				}
+				if(page != 1 && $("#prev").val() == null ){
+					$(".buttonWrapper").prepend("<button id='prev'>이전</button>");
+					
+					$("#prev").click(prevButton);
+				}
+				
+				
+			}
+
+			 function prevButton(){
+				$(".reviewsWrapper").empty(); 
+
+				page--;
+				$(".pageNum").text(page);
+				createdReview(page);
+				if(page == 1){
+					$("#prev").remove();
+				}else if($("#next").val() == null){
+					$(".buttonWrapper").append("<button id='next'>다음</button>");
+					$("#next").click(nextButton)
+				}
+			}
+			
+			function nextButton(){
+				$(".reviewsWrapper").empty(); 
+				
+				page++;
+				$(".pageNum").text(page);
+				createdReview(page);
+				if(page == totalpage){
+					$("#next").remove();
+				}else if($("#prev").val() == null){
+					$(".buttonWrapper").prepend("<button id='prev'>다음</button>");
+					$("#next").click(prevButton)
+				}
+			}
+
+			</script>
 </body>
 </html>
